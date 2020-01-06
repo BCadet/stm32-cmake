@@ -48,7 +48,7 @@ ELSEIF(STM32_FAMILY STREQUAL "F3")
     SET(HAL_PREFIX stm32f3xx_)
 
 ELSEIF(STM32_FAMILY STREQUAL "F4")
-    SET(HAL_COMPONENTS adc can cec cortex crc cryp dac dcmi dma dma2d eth flash
+    SET(HAL_COMPONENTS adc can cec cortex crc cryp dac dcmi dma dma2d eth exti flash
                        flash_ramfunc fmpi2c gpio hash hcd i2c i2s irda iwdg ltdc
                        nand nor pccard pcd pwr qspi rcc rng rtc sai sd sdram
                        smartcard spdifrx spi sram tim uart usart wwdg)
