@@ -47,7 +47,7 @@ SET(FATFS_COMMON_HEADERS
 )
 
 FIND_PATH(FATFS_COMMON_INCLUDE_DIR ${FATFS_COMMON_HEADERS}
-    HINTS ${STM32Cube_DIR}/Middlewares/Third_Party/FatFs/src
+    HINTS ${STM32Cube_DIR}/Middlewares/Third_Party/FatFs/src ${STM32Cube_DIR}/Middlewares/Third_Party/FatFS/src
     CMAKE_FIND_ROOT_PATH_BOTH
 )
 
@@ -58,7 +58,7 @@ SET(FATFS_INCLUDE_DIRS
 FOREACH(SRC ${FATFS_COMMON_SOURCES})
     SET(SRC_FILE SRC_FILE-NOTFOUND)
     FIND_FILE(SRC_FILE ${SRC}
-        HINTS ${STM32Cube_DIR}/Middlewares/Third_Party/FatFs/src/
+        HINTS ${STM32Cube_DIR}/Middlewares/Third_Party/FatFs/src/  ${STM32Cube_DIR}/Middlewares/Third_Party/FatFS/src/
         CMAKE_FIND_ROOT_PATH_BOTH
     )
     LIST(APPEND FATFS_SOURCES ${SRC_FILE})
@@ -67,7 +67,7 @@ ENDFOREACH()
 FOREACH(SRC ${FATFS_OPTION_SOURCES})
     SET(SRC_FILE SRC_FILE-NOTFOUND)
     FIND_FILE(SRC_FILE ${SRC}
-        HINTS ${STM32Cube_DIR}/Middlewares/Third_Party/FatFs/src/option/
+        HINTS ${STM32Cube_DIR}/Middlewares/Third_Party/FatFs/src/option/  ${STM32Cube_DIR}/Middlewares/Third_Party/FatFS/src/option/
         CMAKE_FIND_ROOT_PATH_BOTH
     )
     LIST(APPEND FATFS_SOURCES ${SRC_FILE})
