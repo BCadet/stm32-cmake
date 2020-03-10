@@ -1,0 +1,304 @@
+IF(NOT STM32Cube_DIR)
+    SET(STM32Cube_DIR "/opt/STM32Cube_FW_F1_V1.2.0")
+    MESSAGE(STATUS "No STM32Cube_DIR specified, using default: " ${STM32Cube_DIR})
+ENDIF()
+
+SET(LWIP_APPS httpd lwiperf mdns mqtt netbiosns snmp sntp tftp)
+SET(LWIP_MODES ipv4 ipv6)
+SET(LWIP_FOLDER ${STM32Cube_DIR}/Middlewares/Third_Party/LwIP/src)
+
+SET(LWIP_HEADERS
+    ${LWIP_FOLDER}/include/netif/ethernet.h
+    ${LWIP_FOLDER}/include/netif/lowpan6.h
+    ${LWIP_FOLDER}/include/netif/ppp/ppp_impl.h
+    ${LWIP_FOLDER}/include/netif/ppp/pppcrypt.h
+    ${LWIP_FOLDER}/include/netif/ppp/ecp.h
+    ${LWIP_FOLDER}/include/netif/ppp/vj.h
+    ${LWIP_FOLDER}/include/netif/ppp/pppol2tp.h
+    ${LWIP_FOLDER}/include/netif/ppp/pppdebug.h
+    ${LWIP_FOLDER}/include/netif/ppp/eap.h
+    ${LWIP_FOLDER}/include/netif/ppp/chap-new.h
+    ${LWIP_FOLDER}/include/netif/ppp/ccp.h
+    ${LWIP_FOLDER}/include/netif/ppp/ipcp.h
+    ${LWIP_FOLDER}/include/netif/ppp/pppoe.h
+    ${LWIP_FOLDER}/include/netif/ppp/magic.h
+    ${LWIP_FOLDER}/include/netif/ppp/ppp.h
+    ${LWIP_FOLDER}/include/netif/ppp/upap.h
+    ${LWIP_FOLDER}/include/netif/ppp/ppp_opts.h
+    ${LWIP_FOLDER}/include/netif/ppp/fsm.h
+    ${LWIP_FOLDER}/include/netif/ppp/pppos.h
+    ${LWIP_FOLDER}/include/netif/ppp/lcp.h
+    ${LWIP_FOLDER}/include/netif/ppp/polarssl/sha1.h
+    ${LWIP_FOLDER}/include/netif/ppp/polarssl/md5.h
+    ${LWIP_FOLDER}/include/netif/ppp/polarssl/md4.h
+    ${LWIP_FOLDER}/include/netif/ppp/polarssl/arc4.h
+    ${LWIP_FOLDER}/include/netif/ppp/polarssl/des.h
+    ${LWIP_FOLDER}/include/netif/ppp/pppapi.h
+    ${LWIP_FOLDER}/include/netif/ppp/chap_ms.h
+    ${LWIP_FOLDER}/include/netif/ppp/chap-md5.h
+    ${LWIP_FOLDER}/include/netif/ppp/mppe.h
+    ${LWIP_FOLDER}/include/netif/ppp/ipv6cp.h
+    ${LWIP_FOLDER}/include/netif/ppp/eui64.h
+    ${LWIP_FOLDER}/include/netif/slipif.h
+    ${LWIP_FOLDER}/include/netif/etharp.h
+    ${LWIP_FOLDER}/include/netif/lowpan6_opts.h
+    ${LWIP_FOLDER}/include/lwip/ip6.h
+    ${LWIP_FOLDER}/include/lwip/memp.h
+    ${LWIP_FOLDER}/include/lwip/tcp.h
+    ${LWIP_FOLDER}/include/lwip/arch.h
+    ${LWIP_FOLDER}/include/lwip/ip4_addr.h
+    ${LWIP_FOLDER}/include/lwip/autoip.h
+    ${LWIP_FOLDER}/include/lwip/sio.h
+    ${LWIP_FOLDER}/include/lwip/priv/api_msg.h
+    ${LWIP_FOLDER}/include/lwip/priv/nd6_priv.h
+    ${LWIP_FOLDER}/include/lwip/priv/tcp_priv.h
+    ${LWIP_FOLDER}/include/lwip/priv/tcpip_priv.h
+    ${LWIP_FOLDER}/include/lwip/priv/memp_priv.h
+    ${LWIP_FOLDER}/include/lwip/priv/memp_std.h
+    ${LWIP_FOLDER}/include/lwip/icmp6.h
+    ${LWIP_FOLDER}/include/lwip/ip6_frag.h
+    ${LWIP_FOLDER}/include/lwip/pbuf.h
+    ${LWIP_FOLDER}/include/lwip/timeouts.h
+    ${LWIP_FOLDER}/include/lwip/stats.h
+    ${LWIP_FOLDER}/include/lwip/apps/sntp_opts.h
+    ${LWIP_FOLDER}/include/lwip/apps/netbiosns.h
+    ${LWIP_FOLDER}/include/lwip/apps/snmp_mib2.h
+    ${LWIP_FOLDER}/include/lwip/apps/snmp_table.h
+    ${LWIP_FOLDER}/include/lwip/apps/mdns_opts.h
+    ${LWIP_FOLDER}/include/lwip/apps/snmp_scalar.h
+    ${LWIP_FOLDER}/include/lwip/apps/tftp_opts.h
+    ${LWIP_FOLDER}/include/lwip/apps/fs.h
+    ${LWIP_FOLDER}/include/lwip/apps/lwiperf.h
+    ${LWIP_FOLDER}/include/lwip/apps/snmp_threadsync.h
+    ${LWIP_FOLDER}/include/lwip/apps/snmpv3.h
+    ${LWIP_FOLDER}/include/lwip/apps/tftp_server.h
+    ${LWIP_FOLDER}/include/lwip/apps/mqtt.h
+    ${LWIP_FOLDER}/include/lwip/apps/mqtt_opts.h
+    ${LWIP_FOLDER}/include/lwip/apps/httpd_opts.h
+    ${LWIP_FOLDER}/include/lwip/apps/netbiosns_opts.h
+    ${LWIP_FOLDER}/include/lwip/apps/mdns_priv.h
+    ${LWIP_FOLDER}/include/lwip/apps/snmp.h
+    ${LWIP_FOLDER}/include/lwip/apps/snmp_opts.h
+    ${LWIP_FOLDER}/include/lwip/apps/snmp_core.h
+    ${LWIP_FOLDER}/include/lwip/apps/sntp.h
+    ${LWIP_FOLDER}/include/lwip/apps/mdns.h
+    ${LWIP_FOLDER}/include/lwip/apps/httpd.h
+    ${LWIP_FOLDER}/include/lwip/def.h
+    ${LWIP_FOLDER}/include/lwip/prot/ip6.h
+    ${LWIP_FOLDER}/include/lwip/prot/tcp.h
+    ${LWIP_FOLDER}/include/lwip/prot/autoip.h
+    ${LWIP_FOLDER}/include/lwip/prot/icmp6.h
+    ${LWIP_FOLDER}/include/lwip/prot/ethernet.h
+    ${LWIP_FOLDER}/include/lwip/prot/udp.h
+    ${LWIP_FOLDER}/include/lwip/prot/dns.h
+    ${LWIP_FOLDER}/include/lwip/prot/icmp.h
+    ${LWIP_FOLDER}/include/lwip/prot/igmp.h
+    ${LWIP_FOLDER}/include/lwip/prot/etharp.h
+    ${LWIP_FOLDER}/include/lwip/prot/nd6.h
+    ${LWIP_FOLDER}/include/lwip/prot/ip4.h
+    ${LWIP_FOLDER}/include/lwip/prot/mld6.h
+    ${LWIP_FOLDER}/include/lwip/prot/ip.h
+    ${LWIP_FOLDER}/include/lwip/prot/dhcp.h
+    ${LWIP_FOLDER}/include/lwip/sockets.h
+    ${LWIP_FOLDER}/include/lwip/opt.h
+    ${LWIP_FOLDER}/include/lwip/netdb.h
+    ${LWIP_FOLDER}/include/lwip/inet.h
+    ${LWIP_FOLDER}/include/lwip/ip4_frag.h
+    ${LWIP_FOLDER}/include/lwip/udp.h
+    ${LWIP_FOLDER}/include/lwip/dns.h
+    ${LWIP_FOLDER}/include/lwip/raw.h
+    ${LWIP_FOLDER}/include/lwip/dhcp6.h
+    ${LWIP_FOLDER}/include/lwip/err.h
+    ${LWIP_FOLDER}/include/lwip/icmp.h
+    ${LWIP_FOLDER}/include/lwip/igmp.h
+    ${LWIP_FOLDER}/include/lwip/netbuf.h
+    ${LWIP_FOLDER}/include/lwip/mem.h
+    ${LWIP_FOLDER}/include/lwip/init.h
+    ${LWIP_FOLDER}/include/lwip/etharp.h
+    ${LWIP_FOLDER}/include/lwip/ip_addr.h
+    ${LWIP_FOLDER}/include/lwip/nd6.h
+    ${LWIP_FOLDER}/include/lwip/ip4.h
+    ${LWIP_FOLDER}/include/lwip/debug.h
+    ${LWIP_FOLDER}/include/lwip/mld6.h
+    ${LWIP_FOLDER}/include/lwip/ip6_addr.h
+    ${LWIP_FOLDER}/include/lwip/tcpip.h
+    ${LWIP_FOLDER}/include/lwip/ip.h
+    ${LWIP_FOLDER}/include/lwip/api.h
+    ${LWIP_FOLDER}/include/lwip/ethip6.h
+    ${LWIP_FOLDER}/include/lwip/sys.h
+    ${LWIP_FOLDER}/include/lwip/netifapi.h
+    ${LWIP_FOLDER}/include/lwip/snmp.h
+    ${LWIP_FOLDER}/include/lwip/inet_chksum.h
+    ${LWIP_FOLDER}/include/lwip/netif.h
+    ${LWIP_FOLDER}/include/lwip/errno.h
+    ${LWIP_FOLDER}/include/lwip/dhcp.h
+    ${LWIP_FOLDER}/include/posix/netdb.h
+    ${LWIP_FOLDER}/include/posix/sys/socket.h
+    ${LWIP_FOLDER}/include/posix/errno.h
+)
+
+SET(LWIP_CORE_SRC
+    ${LWIP_FOLDER}/core/init.c
+	${LWIP_FOLDER}/core/def.c
+	${LWIP_FOLDER}/core/dns.c
+	${LWIP_FOLDER}/core/inet_chksum.c
+	${LWIP_FOLDER}/core/ip.c
+	${LWIP_FOLDER}/core/mem.c
+	${LWIP_FOLDER}/core/memp.c
+	${LWIP_FOLDER}/core/netif.c
+	${LWIP_FOLDER}/core/pbuf.c
+	${LWIP_FOLDER}/core/raw.c
+	${LWIP_FOLDER}/core/stats.c
+	${LWIP_FOLDER}/core/sys.c
+	${LWIP_FOLDER}/core/tcp.c
+	${LWIP_FOLDER}/core/tcp_in.c
+	${LWIP_FOLDER}/core/tcp_out.c
+	${LWIP_FOLDER}/core/timeouts.c
+	${LWIP_FOLDER}/core/udp.c
+)
+
+SET(LWIP_IPV4_SRC
+    ${LWIP_FOLDER}/core/ipv4/autoip.c
+    ${LWIP_FOLDER}/core/ipv4/dhcp.c
+    ${LWIP_FOLDER}/core/ipv4/etharp.c
+    ${LWIP_FOLDER}/core/ipv4/icmp.c
+    ${LWIP_FOLDER}/core/ipv4/igmp.c
+    ${LWIP_FOLDER}/core/ipv4/ip4_frag.c
+    ${LWIP_FOLDER}/core/ipv4/ip4.c
+    ${LWIP_FOLDER}/core/ipv4/ip4_addr.c
+)
+
+SET(LWIP_IPV6_SRC
+    ${LWIP_FOLDER}/core/ipv6/dhcp6.c
+	${LWIP_FOLDER}/core/ipv6/ethip6.c
+	${LWIP_FOLDER}/core/ipv6/icmp6.c
+	${LWIP_FOLDER}/core/ipv6/inet6.c
+	${LWIP_FOLDER}/core/ipv6/ip6.c
+	${LWIP_FOLDER}/core/ipv6/ip6_addr.c
+	${LWIP_FOLDER}/core/ipv6/ip6_frag.c
+	${LWIP_FOLDER}/core/ipv6/mld6.c
+    ${LWIP_FOLDER}/core/ipv6/nd6.c
+)
+
+SET(LWIP_API_SRC
+    ${LWIP_FOLDER}/api/api_lib.c
+	${LWIP_FOLDER}/api/api_msg.c
+	${LWIP_FOLDER}/api/err.c
+	${LWIP_FOLDER}/api/netbuf.c
+	${LWIP_FOLDER}/api/netdb.c
+	${LWIP_FOLDER}/api/netifapi.c
+	${LWIP_FOLDER}/api/sockets.c
+	${LWIP_FOLDER}/api/tcpip.c
+)
+
+SET(LWIP_NETIF_SRC
+    ${LWIP_FOLDER}/netif/ethernet.c
+    ${LWIP_FOLDER}/netif/slipif.c
+)
+
+SET(LWIP_SIXLOWPAN_SRC
+    ${LWIP_FOLDER}/netif/lowpan6.c
+)
+
+SET(LWIP_PPP_SRC
+    ${LWIP_FOLDER}/netif/ppp/auth.c
+	${LWIP_FOLDER}/netif/ppp/ccp.c
+	${LWIP_FOLDER}/netif/ppp/chap-md5.c
+	${LWIP_FOLDER}/netif/ppp/chap_ms.c
+	${LWIP_FOLDER}/netif/ppp/chap-new.c
+	${LWIP_FOLDER}/netif/ppp/demand.c
+	${LWIP_FOLDER}/netif/ppp/eap.c
+	${LWIP_FOLDER}/netif/ppp/ecp.c
+	${LWIP_FOLDER}/netif/ppp/eui64.c
+	${LWIP_FOLDER}/netif/ppp/fsm.c
+	${LWIP_FOLDER}/netif/ppp/ipcp.c
+	${LWIP_FOLDER}/netif/ppp/ipv6cp.c
+	${LWIP_FOLDER}/netif/ppp/lcp.c
+	${LWIP_FOLDER}/netif/ppp/magic.c
+	${LWIP_FOLDER}/netif/ppp/mppe.c
+	${LWIP_FOLDER}/netif/ppp/multilink.c
+	${LWIP_FOLDER}/netif/ppp/ppp.c
+	${LWIP_FOLDER}/netif/ppp/pppapi.c
+	${LWIP_FOLDER}/netif/ppp/pppcrypt.c
+	${LWIP_FOLDER}/netif/ppp/pppoe.c
+	${LWIP_FOLDER}/netif/ppp/pppol2tp.c
+	${LWIP_FOLDER}/netif/ppp/pppos.c
+	${LWIP_FOLDER}/netif/ppp/upap.c
+	${LWIP_FOLDER}/netif/ppp/utils.c
+	${LWIP_FOLDER}/netif/ppp/vj.c
+	${LWIP_FOLDER}/netif/ppp/polarssl/arc4.c
+	${LWIP_FOLDER}/netif/ppp/polarssl/des.c
+	${LWIP_FOLDER}/netif/ppp/polarssl/md4.c
+	${LWIP_FOLDER}/netif/ppp/polarssl/md5.c
+	${LWIP_FOLDER}/netif/ppp/polarssl/sha1.c
+)
+
+SET(LWIP_SNMP_SRC
+    ${LWIP_FOLDER}/apps/snmp/snmp_asn1.c
+	${LWIP_FOLDER}/apps/snmp/snmp_core.c
+	${LWIP_FOLDER}/apps/snmp/snmp_mib2.c
+	${LWIP_FOLDER}/apps/snmp/snmp_mib2_icmp.c
+	${LWIP_FOLDER}/apps/snmp/snmp_mib2_interfaces.c
+	${LWIP_FOLDER}/apps/snmp/snmp_mib2_ip.c
+	${LWIP_FOLDER}/apps/snmp/snmp_mib2_snmp.c
+	${LWIP_FOLDER}/apps/snmp/snmp_mib2_system.c
+	${LWIP_FOLDER}/apps/snmp/snmp_mib2_tcp.c
+	${LWIP_FOLDER}/apps/snmp/snmp_mib2_udp.c
+	${LWIP_FOLDER}/apps/snmp/snmp_msg.c
+	${LWIP_FOLDER}/apps/snmp/snmpv3.c
+	${LWIP_FOLDER}/apps/snmp/snmp_netconn.c
+	${LWIP_FOLDER}/apps/snmp/snmp_pbuf_stream.c
+	${LWIP_FOLDER}/apps/snmp/snmp_raw.c
+	${LWIP_FOLDER}/apps/snmp/snmp_scalar.c
+	${LWIP_FOLDER}/apps/snmp/snmp_table.c
+	${LWIP_FOLDER}/apps/snmp/snmp_threadsync.c
+	${LWIP_FOLDER}/apps/snmp/snmp_traps.c
+	${LWIP_FOLDER}/apps/snmp/snmpv3_mbedtls.c
+    ${LWIP_FOLDER}/apps/snmp/snmpv3_dummy.c
+)
+
+SET(LWIP_SNMP_HEADERS
+    snmp_pbuf_stream.h
+    snmp_asn1.h
+    snmp_msg.h
+    snmp_core_priv.h
+    snmpv3_priv.h
+)
+
+SET(LWIP_HTTPD_SRC
+    ${LWIP_FOLDER}/apps/httpd/fs.c
+    ${LWIP_FOLDER}/apps/httpd/httpd.c
+)
+
+SET(LWIP_HTTPD_HEADERS
+    fsdata.h
+    httpd_structs.h
+)
+
+SET(LWIP_IPERF_SRC
+    ${LWIP_FOLDER}/apps/lwiperf/lwiperf.c
+)
+
+SET(LWIP_SNTP_SRC
+    ${LWIP_FOLDER}/apps/sntp/sntp.c
+)
+
+SET(LWIP_MDSN_SRC
+    ${LWIP_FOLDER}/apps/mdns/mdns.c
+)
+
+SET(LWIP_NETBIOSNS_SRC
+    ${LWIP_FOLDER}/apps/netbiosns/netbiosns.c
+)
+
+SET(LWIP_TFTPD_SRC
+    ${LWIP_FOLDER}/apps/tftp/tftp_server.c
+)
+
+SET(LWIP_MQTT_SRC
+    ${LWIP_FOLDER}/apps/mqtt/mqtt.c
+)
+
+INCLUDE(FindPackageHandleStandardArgs)
+
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(LwIP DEFAULT_MSG LWIP_HEADERS LWIP_CORE_SRC)
